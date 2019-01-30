@@ -18,8 +18,19 @@ const FONTS = {
 //    can be accurately taken in SvgRenderer._transformMeasurements.
 for (const fontName in FONTS) {
     const fontData = FONTS[fontName];
+    const base64Uri = `data:application/x-font-ttf;charset=utf-8;base64,${fontData}`;
+
+    // const binaryStr = atob(fontData);
+    // const binary = new Uint8Array(binaryStr.length);
+    // for (let i = 0; i < binaryStr.length; i++) {
+    //     binary[i] = binaryStr.charCodeAt(i);
+    // }
+    // const binary = new Uint8Array(Array.from(atob(fontData), char => char.charCodeAt(0)));
+    // const blobUrl = URL.createObjectURL(new Blob([binary], {type: 'application/x-font-ttf'}));
+    const blobUrl = URL.createObjectURL(new Blob([fontData], {type: 'application/x-font-tff;base64'}));
+
     FONTS[fontName] = '@font-face {' +
-        `font-family: "${fontName}";src: url("data:application/x-font-ttf;charset=utf-8;base64,${fontData}");}`;
+        `font-family: "${fontName}";src: url("${blobUrl}");}`;
 }
 
 if (!document.getElementById('scratch-font-styles')) {
